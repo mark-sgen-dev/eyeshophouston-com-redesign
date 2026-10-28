@@ -1,0 +1,21 @@
+# site-reforge redirect map (Apache). Each source redirect matched exactly: mod_alias Redirect is a prefix match.
+RedirectMatch 301 "^/category/testimonials/$" "/"
+RedirectMatch 301 "^/eyeglasses-contacts/contact-lenses/$" "/contact-lenses/"
+RedirectMatch 301 "^/eyeglasses/prescription-eyeglasses/progressive-lenses/$" "/eyeglasses/"
+RedirectMatch 301 "^/eyeglasses-contacts/designer-frames/$" "/eyeglasses/designer-frames/"
+RedirectMatch 301 "^/eyeglasses-contacts/designer-frames$" "/eyeglasses/designer-frames/"
+RedirectMatch 301 "^/eyeglasses-contacts/prescription-eyeglasses/$" "/eyeglasses/prescription-eyeglasses/"
+RedirectMatch 301 "^/eyeglasses-contacts/sunglasses/$" "/eyeglasses/sunglasses/"
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # /contact serves contact.html, unless a real file or directory answers it.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+</IfModule>
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} in { '/llms.txt' }">
+    Header set X-Robots-Tag "noindex"
+  </If>
+</IfModule>

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json#site-reforge-redirect-map",
+  "redirects": [
+    {
+      "source": "/category/testimonials/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses-contacts/contact-lenses/",
+      "destination": "/contact-lenses/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses/prescription-eyeglasses/progressive-lenses/",
+      "destination": "/eyeglasses/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses-contacts/designer-frames/",
+      "destination": "/eyeglasses/designer-frames/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses-contacts/designer-frames",
+      "destination": "/eyeglasses/designer-frames/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses-contacts/prescription-eyeglasses/",
+      "destination": "/eyeglasses/prescription-eyeglasses/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eyeglasses-contacts/sunglasses/",
+      "destination": "/eyeglasses/sunglasses/",
+      "statusCode": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ]
+}

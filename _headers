@@ -1,0 +1,3 @@
+# response headers, written beside the site-reforge redirect map (Netlify / Cloudflare Pages).
+/llms.txt
+  X-Robots-Tag: noindex

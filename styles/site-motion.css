@@ -1,0 +1,98 @@
+/* site-motion.css — the motion layer every page of this build links.
+ *
+ *   <link rel="stylesheet" href="../styles/site-motion.css">
+ *   <script src="../scripts/site-motion.js" defer></script>
+ *
+ * Six patterns, taken from the house styleguide's own top-12 page with its own
+ * timing values: a scroll reveal with stagger, button / link / focus
+ * transitions, a card lift, an image zoom inside a clipped frame, a header that
+ * settles once the page scrolls, and a count-up that ends on the figure already
+ * written on the page.
+ *
+ * THE RULES THIS FILE IS WRITTEN UNDER. Each one is a check it has to pass.
+ *
+ *   * NO COLOUR VALUES, anywhere. The brand check counts every colour literal
+ *     in an authored stylesheet against the token layer's references, so a
+ *     shadow or a focus ring written here would read as the preset being worked
+ *     around rather than applied. Colour lives in tokens.css and site.css; this
+ *     file declares --ease, --t-fast and --t-reveal and nothing else. Where an
+ *     appearance IS part of a pattern -- the settled header's shadow -- it is
+ *     read from a token the page may set, with `none` as the fallback.
+ *   * NOTHING IS HIDDEN WITHOUT A SCRIPT. Every start state sits behind
+ *     `.js-motion`, which the script adds to <html> itself. A 404 on the
+ *     script, or a throw inside it, leaves the page fully visible: no reveal,
+ *     and no blank sections where the content should be.
+ *   * VERTICAL ONLY in a start state: opacity and translateY. The responsive
+ *     sweep measures a page after the scroll capture, so a horizontal offset or
+ *     a scale left standing there reads as an element overflowing its viewport.
+ *   * TAP TARGETS STAY 44px. The settled header changes its own padding; it
+ *     never shrinks a link or a button inside itself.
+ *   * prefers-reduced-motion: reduce TURNS EVERYTHING OFF -- which, for the
+ *     reveal, means showing it rather than leaving it at opacity 0.
+ *
+ * The hooks a page uses: `.reveal` on a section wrapper, `.card`, `.frame`
+ * around an image, `.btn`, `.site-header`, and `.count-up` on an element whose
+ * own text is a plain whole number.
+ */
+
+:root {
+  /* The settle the styleguide uses on everything that moves. */
+  --ease: cubic-bezier(.05, .5, .3, 1);
+  --t-fast: .2s ease-out;
+  --t-reveal: .6s var(--ease);
+}
+
+/* --- the scroll reveal, with a stagger the script sets per sibling --------- */
+.js-motion .reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--t-reveal), transform var(--t-reveal); }
+.js-motion .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* --- buttons, links and the focus ring ------------------------------------ */
+.btn { transition: background-color var(--t-fast), border-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast); }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+a { transition: color var(--t-fast), background-color var(--t-fast); }
+/* The ring's colour and width belong to the page's own tokens; what belongs
+   here is that it appears without a jump, and clear of the text. */
+a:focus-visible,
+.btn:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible { outline-offset: 3px; transition: outline-offset var(--t-fast); }
+
+/* --- the card lift -------------------------------------------------------- */
+/* :focus-within as well as :hover, so a keyboard reaches the same state. */
+.card { transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.card:hover,
+.card:focus-within { transform: translateY(-6px); }
+
+/* --- the image zoom, inside a frame that clips it -------------------------- */
+/* The frame holds a picture, not prose, so the clipping the sweep looks for --
+   text taller than the box it sits in -- cannot happen here. */
+.frame { position: relative; overflow: hidden; }
+.frame img { display: block; width: 100%; height: auto; transition: transform .4s var(--ease); }
+.frame:hover img,
+.frame:focus-within img { transform: scale(1.06); }
+
+/* --- the header, settled ---------------------------------------------------
+   The script adds `.is-stuck` once the page has scrolled past the header's own
+   height. Only the padding and the glass are ours; the background and the
+   shadow come from the page's tokens, and with none set nothing is drawn. */
+.site-header { transition: padding var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast), border-color var(--t-fast); }
+.js-motion .site-header.is-stuck {
+  padding-top: var(--header-stuck-pad, .5rem);
+  padding-bottom: var(--header-stuck-pad, .5rem);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: var(--shadow-stuck, none);
+}
+
+/* --- the count-up --------------------------------------------------------- */
+/* Fixed-width digits, so a figure counting up to 1500 does not reflow the line
+   it sits on four times on the way there. */
+.count-up { font-variant-numeric: tabular-nums; }
+
+/* --- reduce motion -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js-motion .reveal,
+  .js-motion .reveal.in-view { opacity: 1 !important; transform: none !important; }
+}

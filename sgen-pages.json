@@ -1,0 +1,13 @@
+{
+ "schema": "sgen/pages@1",
+ "extra": [
+  "/404-page-not-found/",
+  "/team/dr-ashley-bagwell-o-d/",
+  "/team/dr-linda-rhodes-o-d-f-a-a-o/",
+  "/team/jessica-wong-o-d/",
+  "/template/footer-2/",
+  "/template/footer/",
+  "/template/header-2/",
+  "/template/header/"
+ ]
+}

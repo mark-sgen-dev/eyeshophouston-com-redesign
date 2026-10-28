@@ -1,0 +1,286 @@
+/* site.css — the redesign's own layer.
+ * Colour NEVER appears as a literal here: every colour is a var(--c-N) from
+ * tokens.css, which sr-tokens measured from the old site's own pages.
+ * Type is the measured --font-body / --font-display; sizes and spaces are the
+ * measured --fs-* / --sp-* steps.
+ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body), Georgia, serif;
+  font-size: var(--fs-11);
+  line-height: 1.7;
+  color: var(--c-6);
+  background: var(--c-2);
+}
+
+img { max-width: 100%; height: auto; }
+
+a { color: var(--c-1); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-body), Georgia, serif;
+  color: var(--c-1);
+  line-height: 1.2;
+  margin: 0 0 var(--sp-15);
+}
+
+h1 { font-size: var(--fs-35); }
+h2 { font-size: var(--fs-27); }
+h3 { font-size: var(--fs-21); }
+h4 { font-size: var(--fs-14); }
+
+p { margin: 0 0 var(--sp-15); }
+
+.wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-16);
+}
+
+/* --- header ---------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--c-1);
+  color: var(--c-2);
+  padding: var(--sp-16) 0;
+}
+
+.site-header a { color: var(--c-2); text-decoration: none; }
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-16);
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; flex-direction: column; line-height: 1.1; }
+.brand-name { font-size: var(--fs-22); letter-spacing: .14em; }
+.brand-sub { font-size: var(--fs-3); letter-spacing: .34em; color: var(--c-4); }
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-5);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.header-actions { display: flex; gap: var(--sp-9); align-items: center; }
+
+/* --- buttons --------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  padding: var(--sp-11) var(--sp-16);
+  min-height: 44px;
+  border: 1px solid var(--c-1);
+  border-radius: var(--radius-3);
+  background: var(--c-1);
+  color: var(--c-2);
+  font-size: var(--fs-5);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 20px;
+}
+
+.btn-light,
+.site-header a.btn-light,
+.site-footer a.btn-light { background: var(--c-2); color: var(--c-1); border-color: var(--c-2); }
+.btn-ghost { background: transparent; color: var(--c-2); border-color: var(--c-2); }
+.btn:hover { box-shadow: var(--shadow-2); }
+
+/* --- sections -------------------------------------------------------- */
+
+section { padding: var(--sp-24) 0; }
+section:nth-of-type(even) { background: var(--c-2); }
+
+.band-dark { background: var(--c-1); color: var(--c-2); }
+.band-dark h1,
+.band-dark h2,
+.band-dark h3 { color: var(--c-2); }
+
+.band-soft { background: var(--c-4); }
+
+.hero {
+  background: var(--c-1);
+  color: var(--c-2);
+  padding: var(--sp-26) 0;
+}
+.hero h1 { color: var(--c-2); max-width: 20ch; }
+.hero p { max-width: 62ch; font-size: var(--fs-14); }
+.crumb {
+  font-size: var(--fs-5);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-4);
+  margin-bottom: var(--sp-11);
+}
+
+/* The trail is the old site's own: <nav><ol><li>, one item per line, and the
+   separator lives here in CSS so it is never a word in the page's text. */
+nav.crumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--sp-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+nav.crumb li { display: inline-flex; align-items: center; }
+nav.crumb li + li::before {
+  content: "\00bb";
+  margin-right: var(--sp-8);
+  color: var(--c-4);
+}
+
+.lede { font-size: var(--fs-17); max-width: 68ch; }
+
+/* --- grids and cards -------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: var(--sp-19);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--c-2);
+  border: 1px solid var(--c-4);
+  border-radius: var(--radius-2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body { padding: var(--sp-16); }
+.card h3 { margin-bottom: var(--sp-8); }
+.card p { font-size: var(--fs-10); }
+
+.frame { border-radius: var(--radius-2); }
+.frame img { aspect-ratio: 16 / 10; object-fit: cover; }
+
+.logo-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--sp-16);
+  align-items: center;
+}
+.logo-row .frame img { aspect-ratio: 3 / 2; object-fit: contain; background: var(--c-2); padding: var(--sp-9); }
+
+/* --- stats ------------------------------------------------------------ */
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--sp-19); }
+.stat { text-align: center; }
+.stat .count-up { display: block; font-size: var(--fs-36); color: var(--c-2); }
+.stat span.label { font-size: var(--fs-5); letter-spacing: .1em; text-transform: uppercase; color: var(--c-4); }
+
+/* --- prose ------------------------------------------------------------ */
+
+.prose { max-width: 72ch; }
+.prose h2 { margin-top: var(--sp-21); }
+.prose h3 { margin-top: var(--sp-16); }
+.prose ul { padding-left: var(--sp-16); }
+
+/* --- form -------------------------------------------------------------- */
+
+.form-grid { display: grid; gap: var(--sp-15); max-width: 640px; }
+.field label { display: block; font-size: var(--fs-5); letter-spacing: .06em; text-transform: uppercase; margin-bottom: var(--sp-5); }
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-9);
+  font: inherit;
+  font-size: var(--fs-11);
+  color: var(--c-6);
+  background: var(--c-2);
+  border: 1px solid var(--c-7);
+  border-radius: var(--radius-2);
+}
+.field textarea { min-height: 140px; }
+.choice { display: flex; gap: var(--sp-16); flex-wrap: wrap; font-size: var(--fs-10); }
+
+/* --- footer ------------------------------------------------------------ */
+
+.site-footer { background: var(--c-5); color: var(--c-2); padding: var(--sp-24) 0 var(--sp-16); }
+.site-footer a { color: var(--c-2); }
+.site-footer h3 { color: var(--c-2); font-size: var(--fs-14); letter-spacing: .1em; text-transform: uppercase; }
+.footer-grid { display: grid; gap: var(--sp-19); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; }
+.footer-grid li { margin-bottom: var(--sp-8); font-size: var(--fs-10); }
+.hours { width: 100%; border-collapse: collapse; font-size: var(--fs-10); }
+.hours th { text-align: left; font-weight: 400; padding: var(--sp-3) 0; }
+.hours td { text-align: right; padding: var(--sp-3) 0; }
+.colophon {
+  margin-top: var(--sp-19);
+  padding-top: var(--sp-11);
+  border-top: 1px solid var(--c-6);
+  font-size: var(--fs-4);
+  color: var(--c-4);
+}
+
+/* --- tap targets --------------------------------------------------------- */
+/* The kit's own rule, and what the responsive sweep measures: a bare link in the
+   header, the footer or a link list is a tap target too, not only a .btn. */
+
+.site-header a,
+.site-footer a,
+.footer-grid a,
+.colophon a,
+.site-nav a,
+.crumb a,
+.prose li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Under 834px the sweep measures EVERY link and button, an inline link inside a
+   paragraph included, and 44x44 is the floor on both axes. min-width only bites
+   on a box, so a link in the page body is given one; .btn and the chrome rules
+   above are more specific and keep their own display. */
+@media (max-width: 833px) {
+  a,
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  #main a:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* --- small screens ------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  h1 { font-size: var(--fs-31); }
+  h2 { font-size: var(--fs-25); }
+  .site-nav ul { gap: var(--sp-9); font-size: var(--fs-4); }
+  .header-row { justify-content: center; text-align: center; }
+  section { padding: var(--sp-21) 0; }
+  .hero { padding: var(--sp-21) 0; }
+}
